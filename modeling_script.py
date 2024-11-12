@@ -37,10 +37,9 @@ def m_sub(m1, m2):
 
 def m_print(m):
     for r in m:
-        r_str = f"[{r[0]}"
+        r_str = f"{r[0]}"
         for i in range(len(r) - 1):
-            r_str += f"  {r[i+1]}"
-        r_str += "]"
+            r_str += f", {r[i+1]}"
         print(r_str)
     print()
     return
@@ -143,6 +142,14 @@ proposed_fishing_trans = [[0, 1, 1.8, 1.7, 0],
                           [0, 0, 0, 0.13, 0.08]]
 """
 
+my_fishing_mod = [[0, 0, 0, 0.1, 0],
+                  [0, 0, 0, 0, 0],
+                  [0, 0.01, 0, 0, 0],
+                  [0, 0, 0.01, 0, 0],
+                  [0, 0, 0, 0.03, 0.06]]
+
+my_fishing_trans = m_sub(basic_trans, my_fishing_mod)
+
 past_pop_vector = list_to_vector(init_pop_list)
 print("Into past")
 for i in range(25):
@@ -170,8 +177,29 @@ for i in range(25):
 
 print()
 
+my_pop_vector = list_to_vector(init_pop_list)
+print("Into future (my fishing)")
+for i in range(25):
+    print(f"{2 * i + 2} years ahead:")
+    my_pop_vector = m_product(my_fishing_trans, my_pop_vector)
+    v_print(my_pop_vector)
+
+print()
+
 print("Transition matrix 50 years (natural)")
 m_print(m_power(basic_trans, 25))
 
+print("Transition matrix 100 years (natural)")
+m_print(m_power(basic_trans, 50))
+
 print("Transition matrix 50 years (proposed fishing)")
 m_print(m_power(proposed_fishing_trans, 25))
+
+print("Transition matrix 100 years (proposed fishing)")
+m_print(m_power(proposed_fishing_trans, 50))
+
+print("Transition matrix 50 years (my fishing)")
+m_print(m_power(my_fishing_trans, 25))
+
+print("Transition matrix 100 years (my fishing)")
+m_print(m_power(my_fishing_trans, 50))
