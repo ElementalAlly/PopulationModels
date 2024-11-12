@@ -21,6 +21,20 @@ def m_product(m1, m2):
     return r
 
 
+def m_sub(m1, m2):
+    if len(m1) != len(m2):
+        return None
+    if len(m1[0]) != len(m2[0]):
+        return None
+    r = []
+    for i in range(len(m1)):
+        append_list = []
+        for j in range(len(m1[0])):
+            append_list.append(m1[i][j] - m2[i][j])
+        r.append(append_list)
+    return r
+
+
 def m_print(m):
     for r in m:
         r_str = f"[{r[0]}"
@@ -78,6 +92,23 @@ def v_print(v):
     return
 
 
+def m_copy(m):
+    r = []
+    for i in range(len(m)):
+        append_list = []
+        for j in range(len(m[0])):
+            append_list.append(m[i][j])
+        r.append(append_list)
+    return r
+
+
+def m_power(m, n):
+    r = m_copy(m)
+    for i in range(n):
+        r = m_product(r, m)
+    return r
+
+
 init_pop_list = [289, 211, 120, 76, 51]
 
 basic_trans = [[0, 1, 1.9, 1.7, 0],
@@ -96,11 +127,21 @@ basic_inv = [[0, 1.639, 0, 0, 0],
 
 basic_inv = inverse(basic_trans, 5)
 
+proposed_fishing_mod = [[0, 0, 0.1, 0, 0],
+                        [0, 0, 0, 0, 0],
+                        [0, 0.04, 0, 0, 0],
+                        [0, 0, 0.02, 0, 0],
+                        [0, 0, 0, 0, 0]]
+
+proposed_fishing_trans = m_sub(basic_trans, proposed_fishing_mod)
+
+"""
 proposed_fishing_trans = [[0, 1, 1.8, 1.7, 0],
                           [0.61, 0, 0, 0, 0],
                           [0, 0.29, 0, 0, 0],
                           [0, 0, 0.19, 0, 0],
                           [0, 0, 0, 0.13, 0.08]]
+"""
 
 past_pop_vector = list_to_vector(init_pop_list)
 print("Into past")
@@ -109,6 +150,7 @@ for i in range(25):
     past_pop_vector = m_product(basic_inv, past_pop_vector)
     v_print(past_pop_vector)
 
+print()
 
 natural_pop_vector = list_to_vector(init_pop_list)
 print("Into future (natural)")
@@ -117,6 +159,7 @@ for i in range(25):
     natural_pop_vector = m_product(basic_trans, natural_pop_vector)
     v_print(natural_pop_vector)
 
+print()
 
 proposed_fishing_pop_vector = list_to_vector(init_pop_list)
 print("Into future (proposed fishing)")
@@ -124,3 +167,11 @@ for i in range(25):
     print(f"{2 * i + 2} years ahead:")
     proposed_fishing_pop_vector = m_product(proposed_fishing_trans, proposed_fishing_pop_vector)
     v_print(proposed_fishing_pop_vector)
+
+print()
+
+print("Transition matrix 50 years (natural)")
+m_print(m_power(basic_trans, 25))
+
+print("Transition matrix 50 years (proposed fishing)")
+m_print(m_power(proposed_fishing_trans, 25))
