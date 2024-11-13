@@ -83,10 +83,10 @@ def inverse(m, d):
 
 
 def v_print(v):
-    r = f"[{v[0][0]}"
+    r = f"{v[0][0]}"
     for i in range(1, len(v)):
         r += f", {v[i][0]}"
-    r += "]"
+    # r += "]"
     print(r)
     return
 
@@ -153,7 +153,7 @@ my_fishing_trans = m_sub(basic_trans, my_fishing_mod)
 past_pop_vector = list_to_vector(init_pop_list)
 print("Into past")
 for i in range(25):
-    print(f"{2 * i + 2} years ago:")
+    # print(f"{2 * i + 2} years ago:")
     past_pop_vector = m_product(basic_inv, past_pop_vector)
     v_print(past_pop_vector)
 
@@ -162,7 +162,7 @@ print()
 natural_pop_vector = list_to_vector(init_pop_list)
 print("Into future (natural)")
 for i in range(25):
-    print(f"{2 * i + 2} years ahead:")
+    # print(f"{2 * i + 2} years ahead:")
     natural_pop_vector = m_product(basic_trans, natural_pop_vector)
     v_print(natural_pop_vector)
 
@@ -171,7 +171,7 @@ print()
 proposed_fishing_pop_vector = list_to_vector(init_pop_list)
 print("Into future (proposed fishing)")
 for i in range(25):
-    print(f"{2 * i + 2} years ahead:")
+    # print(f"{2 * i + 2} years ahead:")
     proposed_fishing_pop_vector = m_product(proposed_fishing_trans, proposed_fishing_pop_vector)
     v_print(proposed_fishing_pop_vector)
 
@@ -180,7 +180,7 @@ print()
 my_pop_vector = list_to_vector(init_pop_list)
 print("Into future (my fishing)")
 for i in range(25):
-    print(f"{2 * i + 2} years ahead:")
+    # print(f"{2 * i + 2} years ahead:")
     my_pop_vector = m_product(my_fishing_trans, my_pop_vector)
     v_print(my_pop_vector)
 
